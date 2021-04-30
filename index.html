@@ -20,6 +20,7 @@
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
+    <!-- <script type='text/javascript' src='mongoCredentials.js'></script> -->
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
@@ -27,7 +28,17 @@
 
       var messages = document.getElementById('messages');
       var form = document.getElementById('form');
-      var input = document.getElementById('input');
+      // var input = document.getElementById('input');
+
+      // wait until everything is loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        var input = document.getElementById('input');
+        // console.log(`form=${form}`);
+        input.addEventListener('keydown', (event) => {
+          // console.log(`key=${event.key},code=${event.code}`);
+          socket.emit('keystroke-down', event.key);
+        });
+      });
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
